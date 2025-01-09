@@ -1,13 +1,12 @@
 import { Database } from "arangojs";
 
-// Configurar la conexión con ArangoDB
+
 const db = new Database({
-  url: "http://54.208.181.222:8529", // Cambia esto por la URL de tu ArangoDB si es diferente
+  url: "http://54.208.181.222:8529", 
 });
 db.useBasicAuth("root", "12345678");  
-db.userDatabases("_system");  // Reemplaza con el nombre de tu base de datos
+db.userDatabases("_system");  
 
-// Función para obtener amigos de los amigos filtrados por intereses
 async function getFriendRecommendations(userId, interests) {
     try {
       const query = `
@@ -25,13 +24,12 @@ async function getFriendRecommendations(userId, interests) {
           }
       `;
 
-      // Ejecutar la consulta con parámetros
+
       const cursor = await db.query(query, {
         startUser: `users/${userId}`,
         startUserId: userId,
       });
 
-      // Obtener los resultados
       const results = await cursor.all();
 
       return results;

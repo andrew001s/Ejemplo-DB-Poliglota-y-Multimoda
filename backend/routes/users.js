@@ -3,7 +3,7 @@ const { default: suggestFriends } = require('../connections/poliglota');
 const { default: suggestFriendsModal } = require('../connections/multimodal');
 
 var router = express.Router();
-/* GET users listing. */
+
 router.get('/', function(req, res, next) {
   id = req.query.id || 1;
   category = req.query.category ;
