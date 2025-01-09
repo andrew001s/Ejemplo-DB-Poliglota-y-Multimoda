@@ -11,13 +11,14 @@ async function getFriendRecommendations(userId, interests) {
     try {
       const query = `
         FOR friend IN 2..2 OUTBOUND @startUser friendships
-          FILTER friend._key != @startUserId  // Excluir al usuario actual
+          FILTER friend._key != @startUserId 
           LET directFriend = FIRST(
             FOR direct IN OUTBOUND @startUser friendships
               FILTER direct._id == friend._id
               RETURN direct
           )
-          FILTER directFriend == null  // Excluir amigos directos
+          
+          FILTER directFriend == null 
           RETURN { 
             name: friend.name, 
             interests: friend.interests, 
@@ -29,10 +30,16 @@ async function getFriendRecommendations(userId, interests) {
         startUser: `users/${userId}`,
         startUserId: userId,
       });
-
       const results = await cursor.all();
-
-      return results;
+      if (interests){
+        
+        const filteredResults = results.filter(friend =>
+            friend.interests.some(interest => interests.includes(interest))
+        );
+  
+      return filteredResults;
+        }
+        return results;
     } catch (err) {
       console.error("Error executing query:", err);
       return [];
