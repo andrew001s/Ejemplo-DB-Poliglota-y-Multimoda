@@ -17,7 +17,7 @@ Este proyecto es una aplicación social que permite a los usuarios conectarse co
 
 ## Tecnologías Usadas
 
-- **Backend**: Node.js, Neo4j, MongoDB
+- **Backend**: Node.js, Neo4j, MongoDB, ArangoDB
 - **Frontend**: React Native
 
 ---
@@ -37,7 +37,7 @@ root/
 
 ## Backend
 
-El backend utiliza Neo4j para manejar relaciones entre usuarios y MongoDB para almacenar información adicional de los usuarios.
+El backend utiliza Neo4j para manejar relaciones entre usuarios y MongoDB para almacenar información adicional de los usuarios, o su equivalente con ArangoDB
 
 ### Configuración
 
@@ -51,23 +51,28 @@ El backend utiliza Neo4j para manejar relaciones entre usuarios y MongoDB para a
    ```javascript
    const neo4jDriver = neo4j.driver('bolt://<HOST>:7687', neo4j.auth.basic('<USER>', '<PASSWORD>'));
    const mongoClient = new MongoClient('mongodb://<HOST>:27017');
+   const db = new Database({
+      url: "http://<HOST>:8529", 
+    });
+    db.useBasicAuth("<USER>", "<PASSWORD>");  
+    db.userDatabases("_system");  
    ```
 
-3. Inicia el servidor:
+3. Inicia el servidor backend:
    ```bash
-   node index.js
+   npm start
    ```
 
 ### Endpoints
 
-#### `POST /suggest-friends`
+#### `GET /users`
 Obtiene sugerencias de amistad basadas en conexiones mutuas e intereses.
 
 - **Parámetros:**
   ```json
   {
-    "userId": "<user_id>",
-    "category": ["Music", "Art"]
+    "id": "1",
+    "category": "gaming"
   }
   ```
 
@@ -75,9 +80,12 @@ Obtiene sugerencias de amistad basadas en conexiones mutuas e intereses.
   ```json
   [
     {
-      "id":"1,
-      "name": "John Doe",
-      "category": ["Music", "Photography"]
+      "id": 7,
+        "name": "Grace",
+        "interests": [
+            "movies",
+            "gaming"
+        ]
     }
   ]
   ```
@@ -98,9 +106,9 @@ El frontend está desarrollado en React Native para ofrecer una experiencia móv
 
 2. Ejecuta la aplicación:
    ```bash
-   npx react-native run-android
+   npm start android
    # o para iOS
-   npx react-native run-ios
+   npm start ios
    ```
 
 ### Componentes Clave
@@ -139,24 +147,11 @@ Componente que muestra una lista de usuarios sugeridos en tarjetas al estilo Tin
    npm install
    ```
 
-3. Configura las variables de conexión en el backend.
-
-4. Ejecuta el backend:
-   ```bash
-   cd backend
-   node index.js
-   ```
-
-5. Ejecuta el frontend:
-   ```bash
-   cd frontend
-   npx react-native run-android
-   ```
 
 ---
 
 ## Notas Adicionales
 
 - Asegúrate de tener Neo4j y MongoDB configurados y ejecutándose antes de iniciar el backend.
-- El frontend está optimizado para dispositivos Android, pero también funciona en iOS con los ajustes necesarios.
+- El frontend está optimizado para dispositivos ios, pero también funciona en android con los ajustes necesarios.
 
