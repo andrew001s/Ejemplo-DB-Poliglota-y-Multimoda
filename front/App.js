@@ -11,15 +11,15 @@ export default function App() {
   useEffect(() => {
     if (intereses) { 
       
-      //fetch(`http://localhost:3000/users/?id=${id}&category=${intereses.toLowerCase()}`)
-      fetch(`http://localhost:3000/users//multimodal/?id=${id}&category=${intereses.toLowerCase()}`)
+      fetch(`http://localhost:3000/users/?id=${id}&category=${intereses.toLowerCase()}`)
+      //fetch(`http://localhost:3000/users//multimodal/?id=${id}&category=${intereses.toLowerCase()}`)
         .then((response) => response.json())
         .then((data) => setUsers(data))
         .catch((error) => console.error('Error fetching users:', error));
     }
     else{
-      //fetch(`http://localhost:3000/users/?id=${id}`)
-      fetch(`http://localhost:3000/users/multimodal/?id=${id}&category=${intereses.toLowerCase()}`)
+      fetch(`http://localhost:3000/users/?id=${id}`)
+      //fetch(`http://localhost:3000/users/multimodal/?id=${id}&category=${intereses.toLowerCase()}`)
         .then((response) => response.json())
         .then((data) => setUsers(data))
         .catch((error) => console.error('Error fetching users:', error));

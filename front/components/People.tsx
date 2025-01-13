@@ -5,26 +5,30 @@ const People = ({ users }: { users: any[] }) => {
   return (
     <View style={styles.container}>
       {users.map((user: any, index: number) => (
-        <View key={`${user.id}-${index}`} style={styles.card}>
-          <Image 
-            style={styles.image} 
-            source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKAxB01R_0RSWA6Mo7WZFauEU-LX0oeFokLg&s" }} 
-          />
-          <Text style={styles.name}>{user.name}</Text>
-          <Text style={styles.interests}>
-            {user.interests && user.interests.length > 0 
-              ? `${user.interests[0]} - ${user.interests[1] || ''}` 
-              : 'No interests available'}
-          </Text>
-          <View style={styles.actions}>
-            <TouchableOpacity style={styles.likeButton}>
-              <Text style={styles.likeText}>❤️</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.dislikeButton}>
-              <Text style={styles.dislikeText}>❌</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <React.Fragment key={`${user.id}-${index}`}>
+          {user.interests && user.interests.length > 0 ? (
+            <View style={styles.card}>
+              <Image 
+                style={styles.image} 
+                source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKAxB01R_0RSWA6Mo7WZFauEU-LX0oeFokLg&s" }} 
+              />
+              <Text style={styles.name}>{user.name}</Text>
+              <Text style={styles.interests}>
+                
+                  {user.interests[0]} - {user.interests[1] }
+                  
+              </Text>
+              <View style={styles.actions}>
+                <TouchableOpacity style={styles.likeButton}>
+                  <Text style={styles.likeText}>❤️</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.dislikeButton}>
+                  <Text style={styles.dislikeText}>❌</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : null}
+        </React.Fragment>
       ))}
     </View>
   );
