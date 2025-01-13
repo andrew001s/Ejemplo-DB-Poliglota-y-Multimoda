@@ -49,8 +49,11 @@ El backend utiliza Neo4j para manejar relaciones entre usuarios y MongoDB para a
 
 2. Configura las conexiones a Neo4j y MongoDB en el código fuente:
    ```javascript
+   //Neo$J
    const neo4jDriver = neo4j.driver('bolt://<HOST>:7687', neo4j.auth.basic('<USER>', '<PASSWORD>'));
+   //Mongo
    const mongoClient = new MongoClient('mongodb://<HOST>:27017');
+   //Arango
    const db = new Database({
       url: "http://<HOST>:8529", 
     });
